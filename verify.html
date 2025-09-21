@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Face - Facial Recognition Administration</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.1490.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Verify Face</h1>
+        </header>
+        
+        <nav class="main-nav">
+            
+            <a href="register.html" class="nav-item">
+                <span class="bullet">•</span>
+                Register Face ID
+            </a>
+            <a href="verify.html" class="nav-item active">
+                <span class="bullet">•</span>
+                Recognise Face ID
+            </a>
+            <a href="test-faces.html" class="nav-item">
+                <span class="bullet">•</span>
+                Test Faces
+            </a>
+        </nav>
+
+        <main class="verify-section">
+            <div class="camera-container">
+                <video id="video" autoplay muted></video>
+                <canvas id="canvas" style="display: none;"></canvas>
+                <div class="camera-placeholder" id="camera-placeholder">
+                    <div class="placeholder-text">Camera Feed</div>
+                </div>
+            </div>
+            
+            <div class="camera-controls">
+                <button id="startWebcam" class="control-btn">Start Webcam</button>
+                <button id="stopWebcam" class="control-btn">Stop Webcam</button>
+                <button id="verifyImage" class="control-btn">Verify Image</button>
+                <button id="clearImage" class="control-btn">Clear Image</button>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="backBtn" class="back-btn">Back</button>
+            </div>
+            
+            <div class="verification-result" id="verificationResult" style="display: none;">
+                <h3>Verification Result</h3>
+                <div class="result-content" id="resultContent"></div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="verify.js"></script>
+</body>
+</html>

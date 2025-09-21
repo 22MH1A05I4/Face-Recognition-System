@@ -1,0 +1,297 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Face</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    video, canvas { border: 1px solid #ccc; margin: 10px 0; }
+    .form-group { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Register Face</h1>
+
+  <form id="registerForm">
+    <div class="form-group">
+      <label>First Name:</label>
+      <input type="text" id="firstName" required>
+    </div>
+    <div class="form-group">
+      <label>Last Name:</label>
+      <input type="text" id="lastName" required>
+    </div>
+    <div class="form-group">
+      <label>Date of Birth:</label>
+      <input type="date" id="dob" required>
+    </div>
+    <div class="form-group">
+      <label>Phone Number:</label>
+      <input type="text" id="phoneNumber" required>
+    </div>
+
+    <h3>Capture Face</h3>
+    <video id="video" width="320" height="240" autoplay></video><br>
+    <button type="button" id="captureBtn">Capture</button>
+    <canvas id="canvas" width="320" height="240"></canvas>
+
+    <br><br>
+    <button type="submit">Register</button>
+  </form>
+
+  <p id="statusMsg"></p>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    let capturedImage = null;
+
+    // ✅ Access webcam
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => { video.srcObject = stream; })
+      .catch(err => console.error("Camera error:", err));
+
+    // ✅ Capture image
+    document.getElementById('captureBtn').addEventListener('click', () => {
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      capturedImage = canvas.toDataURL("image/jpeg");
+    });
+
+    // ✅ Submit form
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!capturedImage) {
+        alert("Please capture an image first!");
+        return;
+      }
+
+      const payload = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        dateOfBirth: document.getElementById('dob').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        image: capturedImage
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        document.getElementById('statusMsg').innerText = JSON.stringify(result, null, 2);
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('statusMsg').innerText = "Error: " + err;
+      }
+    });
+  </script>
+</body>
+</html>--->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Face</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #4093F0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 40px 20px;
+      min-height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #555;
+    }
+    input[type="text"], input[type="date"] {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    video, canvas {
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    #statusMsg {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+      color: green;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Register Face</h1>
+
+    <form id="registerForm">
+      <div class="form-group">
+        <label>First Name:</label>
+        <input type="text" id="firstName" required>
+      </div>
+      <div class="form-group">
+        <label>Last Name:</label>
+        <input type="text" id="lastName" required>
+      </div>
+      <div class="form-group">
+        <label>Date of Birth:</label>
+        <input type="date" id="dob" required>
+      </div>
+      <div class="form-group">
+        <label>Phone Number:</label>
+        <input type="text" id="phoneNumber" required>
+      </div>
+
+      <h3>Capture Face</h3>
+      <video id="video" autoplay></video>
+      <canvas id="canvas" width="320" height="240"></canvas>
+
+      <div class="buttons">
+        <button type="button" id="startBtn">Start Webcam</button>
+        <button type="button" id="stopBtn">Stop Webcam</button>
+        <button type="button" id="captureBtn">Capture</button>
+        <button type="button" id="clearBtn">Clear Image</button>
+      </div>
+
+      <button type="submit">Register</button>
+      <button type="button" onclick="window.location.href='index.html'">Back</button>
+    </form>
+
+    <p id="statusMsg"></p>
+  </div>
+
+  <script>
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    let capturedImage = null;
+    let stream = null;
+
+    // Start Webcam
+    document.getElementById('startBtn').addEventListener('click', async () => {
+      if (!stream) {
+        try {
+          stream = await navigator.mediaDevices.getUserMedia({ video: true });
+          video.srcObject = stream;
+        } catch (err) {
+          console.error("Camera error:", err);
+          alert("Unable to access webcam.");
+        }
+      }
+    });
+
+    // Stop Webcam
+    document.getElementById('stopBtn').addEventListener('click', () => {
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+      }
+    });
+
+    // Capture Image
+    document.getElementById('captureBtn').addEventListener('click', () => {
+      if (!stream) {
+        alert("Please start the webcam first!");
+        return;
+      }
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+      capturedImage = canvas.toDataURL("image/jpeg");
+    });
+
+    // Clear Image
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      capturedImage = null;
+    });
+
+    // Submit Form
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!capturedImage) {
+        alert("Please capture an image first!");
+        return;
+      }
+
+      const payload = {
+        firstName: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        dateOfBirth: document.getElementById('dob').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        image: capturedImage
+      };
+
+      try {
+        const res = await fetch("http://localhost:5000/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await res.json();
+        document.getElementById('statusMsg').innerText = JSON.stringify(result, null, 2);
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('statusMsg').innerText = "Error: " + err;
+      }
+    });
+  </script>
+</body>
+</html>
+
