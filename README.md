@@ -12,3 +12,8 @@ Services Used:
 7.AWS AMPLIFY(for deploying)
 
 Project Demo:https://drive.google.com/file/d/1v1wlZ8JmEVLnNXnbAQ9jIqY6Tt0FWQNw/view?usp=sharing
+
+Architecture:
+<img width="1536" height="1024" alt="ChatGPT Image Sep 21, 2025, 12_04_44 PM" src="https://github.com/user-attachments/assets/1f61dec6-ed89-4c04-a8a5-95c36d6b51ca" />
+
+
