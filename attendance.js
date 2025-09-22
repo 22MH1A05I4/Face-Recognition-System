@@ -20,7 +20,7 @@ class AttendanceSystem {
         // AWS Configuration
         this.awsConfig = {
             region: 'us-east-1',
-            apiGatewayUrl: 'https://7wal320aqk.execute-api.us-east-1.amazonaws.com/prod'
+            apiGatewayUrl: 'https://58z5i6ahil.execute-api.us-east-1.amazonaws.com/prod'
         };
         
         this.initializeEventListeners();
