@@ -13,6 +13,8 @@ Services Used:
 
 Project Demo:https://drive.google.com/file/d/1v1wlZ8JmEVLnNXnbAQ9jIqY6Tt0FWQNw/view?usp=sharing
 
+Architecture:
+![WhatsApp Image 2025-09-23 at 11 50 56_d3ab9743](https://github.com/user-attachments/assets/8cda1264-b93c-4091-ae37-4973968d0c3f)
 
 
 
